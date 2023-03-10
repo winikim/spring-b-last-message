@@ -5,20 +5,14 @@ import com.sparta.finalproject.auth.dto.DeleteRequestDto;
 import com.sparta.finalproject.auth.dto.LoginDto;
 import com.sparta.finalproject.auth.dto.SignupDto;
 import com.sparta.finalproject.auth.dto.TokenDto;
+import com.sparta.finalproject.auth.entity.enums.AuthProvider;
 import com.sparta.finalproject.auth.service.AuthService;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -61,12 +55,25 @@ public class AuthController {
     }
 
 
-    //카카오 로그인
-    @GetMapping("/kakao-login")
-    public String kakaoLogin(@RequestParam String code, HttpServletResponse response)
+    /**
+     * OAUHT2
+     * 4가지 gran_type
+     * 1. Authorization_code 방식..
+     * 2. 구글 로그인
+     * @param code
+     * @return
+     * @throws JsonProcessingException
+     *
+     * code 받으면, JWT TOKEN을 주면 됨.
+     */
+
+    //카카오 로그인 , http://localhost:8080/api/auth/GOOGLE/social-lgin
+    @GetMapping("/{authProvider}/social-login")  // http://localhost:8080/api/auth/KAKAO/social-lgin
+    public String socialLogin(@PathVariable AuthProvider authProvider, @RequestParam String code)
         throws JsonProcessingException {
         // code: 카카오 서버로부터 받은 인가 코드
-        String createToken = authService.kakaoLogin(code, response);
+        // 소셜 로그인 = 프로바이더(구글 카카오)의 code를 받으면 우리가 generate한  JWT TOKEN을 준다.
+        String createToken = authService.socialLogin(authProvider, code);
 
         return createToken;
     }

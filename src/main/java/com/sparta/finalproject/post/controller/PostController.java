@@ -25,6 +25,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * HttpServeltReqeust는 Controller를 넘어갈 수 없다.
+ * 만약에, WebFlux Servelt을 안쓰게 되. 그러면 kakaoLogin 함수는 버려야되.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/posts")

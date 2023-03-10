@@ -5,6 +5,7 @@ import com.sparta.finalproject.auth.dto.DeleteRequestDto;
 import com.sparta.finalproject.auth.dto.LoginDto;
 import com.sparta.finalproject.auth.dto.SignupDto;
 import com.sparta.finalproject.auth.dto.TokenDto;
+import com.sparta.finalproject.auth.entity.enums.AuthProvider;
 import com.sparta.finalproject.user.entity.User;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,5 +23,6 @@ public interface AuthService {
 
     void sendSimpleMessage(String to) throws Exception;
 
-    String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException;
+    String socialLogin(AuthProvider authProvider, String code) throws JsonProcessingException;
+
 }
